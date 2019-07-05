@@ -36,9 +36,26 @@ x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1],1))
 #Initialising the RNN
 regressor = Sequential()
 
-#Addition of first LSTM layer
-regressor.add(LSTM(units = 50, return_seqences = True, input_shape = (x_train.shape[1], 1)))
-#Dropout regularisation
+#Addition of first LSTM layer and Dropout regularisation
+regressor.add(LSTM(units = 50, return_sequences = True, input_shape = (x_train.shape[1], 1)))
+regressor.add(Dropout(2.0))
+
+#Add 3 more layers with dropout regularisation too
+regressor.add(LSTM(units = 50, return_sequences = True))
+regressor.add(Dropout(2.0))
+
+regressor.add(LSTM(units = 50, return_sequences = True))
+regressor.add(Dropout(2.0))
+
+regressor.add(LSTM(units = 50, return_sequences = True))
+regressor.add(Dropout(2.0))
+
+#Add the output as a dense layer
+regressor.add(Dense(units = 1))
+
+#Compile RNN
+regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
+
 
 
 
