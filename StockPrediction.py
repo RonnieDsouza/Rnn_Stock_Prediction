@@ -3,6 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler 
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
+from keras.layers import Dropout
 
 #Import training data
 #read the file w/ pandas into a spreadsheet like format
@@ -22,5 +26,23 @@ x_train = []
 y_train = []
 
 for i in range(60,1258):
-	x_train.append(training_set_scaled[]) 
-	y_train
+	x_train.append(training_set_scaled[i-60:i, 0]) 
+	y_train.append(training_set_scaled[i, 0])
+x_train, y_train = np.array(x_train), np.array(y_train)
+
+#Reshaping
+x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1],1))
+
+#Initialising the RNN
+regressor = Sequential()
+
+#Addition of first LSTM layer
+regressor.add(LSTM(units = 50, return_seqences = True, input_shape = (x_train.shape[1], 1)))
+#Dropout regularisation
+
+
+
+
+
+
+
